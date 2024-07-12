@@ -3,10 +3,10 @@ server:
 
 distributor:
     receivers:
-        zipkin:
+        zipkin: #Se envian los datos desde zipkin a tempo
 
 storage:
     trace:
         backend: local
         local:
-            path: /tmp/tempo/blocks
+            path: /tmp/tempo/blocks #ruta de guardado en un stories local (podriamos definir aqui la conexion con DB)

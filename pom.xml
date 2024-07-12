@@ -63,17 +63,17 @@
         <!-- For Tracing -->
         <dependency>
             <groupId>io.micrometer</groupId>
-            <artifactId>micrometer-tracing-bridge-brave</artifactId>
+            <artifactId>micrometer-tracing-bridge-brave</artifactId> #info general de las trazas de zinking
         </dependency>
         <!-- For Latency Visualization -->
         <dependency>
-            <groupId>io.zipkin.reporter2</groupId>
+            <groupId>io.zipkin.reporter2</groupId> #info de los tiempos de visualizacion
             <artifactId>zipkin-reporter-brave</artifactId>
         </dependency>
 
         <!-- For pushing logs out -->
         <dependency>
-            <groupId>com.github.loki4j</groupId>
+            <groupId>com.github.loki4j</groupId> #dependencia de loki
             <artifactId>loki-logback-appender</artifactId>
             <version>1.3.2</version>
             <scope>runtime</scope>

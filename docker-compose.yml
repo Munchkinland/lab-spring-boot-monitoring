@@ -1,40 +1,40 @@
 
 services:
-    tempo:
-        image: grafana/tempo
+    tempo: 
+        image: grafana/tempo #Almacenar la informacion de tracing
         extra_hosts: ['host.docker.internal:host-gateway']
         command: [ "-config.file=/etc/tempo.yaml" ]
         volumes:
-            - ./docker/tempo/tempo-local.yaml:/etc/tempo.yaml:ro
-            - ./target/tempo-data:/tmp/tempo
+            - ./docker/tempo/tempo-local.yaml:/etc/tempo.yaml:ro #ruta en la que se encuentra la configuracion que utilizaremos
+            - ./target/tempo-data:/tmp/tempo 
         ports:
             - "14268"  # jaeger ingest
-            - "9411:9411" # zipkin
+            - "9411:9411" #Exponemos este puerto que lo usamos para obtener la info que pinta zipkin
 
     loki:
-        image: grafana/loki
+        image: grafana/loki #Permite indexar la informacion para hacer consultas
         extra_hosts: ['host.docker.internal:host-gateway']
         command: [ "-config.file=/etc/loki/local-config.yaml" ]
         ports:
-            - "3100:3100"                                   # loki needs to be exposed so it receives logs
+            - "3100:3100"                                   # exponemos el contenedor de loki hacia el exterior para que funcione
 
     prometheus:
-        image: prom/prometheus
+        image: prom/prometheus #base de datos prometheus
         extra_hosts: ['host.docker.internal:host-gateway']
         command:
             - --enable-feature=exemplar-storage
-            - --config.file=/etc/prometheus/prometheus.yml
+            - --config.file=/etc/prometheus/prometheus.yml #fichero de configuracion de prometheus
         volumes:
             - ./docker/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
         ports:
             - "9090:9090"
 
-    grafana:
+    grafana: #configuracion de grafana
         image: grafana/grafana
         extra_hosts: ['host.docker.internal:host-gateway']
         volumes:
-            - ./docker/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources:ro
-            - ./docker/grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards:ro
+            - ./docker/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources:ro #config de datasources
+            - ./docker/grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards:ro #config de dashboards
         environment:
             - GF_AUTH_ANONYMOUS_ENABLED=true
             - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
